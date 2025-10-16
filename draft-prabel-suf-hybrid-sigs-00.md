@@ -100,7 +100,6 @@ They can also be called quantum-resistant or quantum-safe algorithms.
 
 *Component Scheme:*  Each cryptographic scheme that makes up a PQ/T hybrid scheme or PQ/T hybrid protocol.
 
-
 # Proposed Construction
 
 The proposed construction ensures that the second (nested) signature binds the first (nested) signature, making the overall scheme SUF-CMA as long as the (typically PQ) component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
@@ -160,6 +159,38 @@ In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construct
 
 In {{Jan25}}, three signature combiners are introduced. These combiners preserve strong unforgeability as long as at least one of the underlying schemes is strongly unforgeable. Several concrete instantiations with compact signature size are provided.
 
+# Why the Binding Hybrid is Required
+
+Hybrid constructions will have to provide SUF-CMA at the artifact level to ensure single-signature semantics and non-repudiation.  In many real-world deployments the artifact signing use case is central: software releases, firmware images, signed logs, and legal/financial documents are all artifacts that rely on a single, unambiguous signature to prove provenance and integrity. A hybrid design achieves SUF-CMA only if one signature component is cryptographically bound to the other, forming a binding hybrid rather than signing the same message independently.
+
+Any successful forgery of a binding hybrid must fall into one of two categories:
+
+* New second signature on a new input:  
+  The attacker generates a new traditional signature `s1*` that the legitimate signer never produced. The attacker would then need to forge a valid `s2*` over the concatenation `m' || s1*`.  Producing such an `s2*` is a forgery against the PQC algorithm.
+
+* Different second-signature on an already-signed input:  
+  The attacker reuses an existing `(m', s1)` but fabricates a distinct `s2*` for the same `(m' || s1)`, yielding two valid second signatures for one message.
+
+Both outcomes constitute a SUF-CMA forgery against the second component: the first case for a new message, the second for a second valid signature on an existing message.  If the second component is SUF-CMA secure, neither case is computationally feasible, and the combined hybrid inherits SUF-CMA security.
+
+## Loss of Non-Repudiation in Parallel Hybrids under CRQC
+
+As described in {{-LAMPS-COMPOSITE}}, composite hybrids produce multiple component signatures independently over the same message.  
+Once a CRQC can forge the traditional component, an attacker can create an alternate classical signature `s1*` for a message that already has a valid hybrid signature `(s1, s2)`.  Because the PQC signature `s2` remains valid independently of the classical signature, the modified pair `(s1*, s2)` also verifies successfully.
+
+While authenticity of the PQC component remains intact, non-repudiation cannot be guaranteed: multiple distinct hybrid signatures `(s1, s2)` and `(s1*, s2)` can exist for the same message. Therefore, once the classical algorithm becomes breakable, parallel hybrids no longer provide single-signature semantics, the assurance that each message corresponds to exactly one, unique signature from the signer.
+
+On the contrary, this document’s hybrid construction, by binding the second signature `s2` to the first signature `s1`, ensures single-signature semantics and preserves non-repudiation.
+
+## ECDSA vs EdDSA in Hybrid Constructions
+
+Even though both ECDSA (secp256r1/secp384r1) and EdDSA (Ed25519/Ed448) become mathematically breakable once a CRQC can derive private keys from public keys, their behaviour in hybrid constructions differs significantly:
+
+* ECDSA is randomized and non-deterministic, producing multiple distinct valid signatures for the same message. After CRQCs arrive, an attacker can generate arbitrarily many valid classical signatures, and hence multiple valid hybrids, destroying non-repudiation.
+
+* Ed25519 and Ed448, in contrast, are deterministic and provide SUF-CMA security in their standard formulations, yielding a unique valid signature per message for a given key. This determinism eliminates malleability and preserves non-repudiation even if a CRQC later compromises the private key. In parallel hybrids, this property avoids ambiguity about which signature is authentic. In binding hybrids, EdDSA’s fixed, deterministic format enables unambiguous inclusion of `s1` in the PQC input (`m' || s1`), simplifying verification and ensuring consistent interpretation across implementations.
+
+Consequently, ECDSA can only be used in a binding hybrid to preserve non-repudiation, and cannot be used in a parallel hybrid, because it is not SUF-CMA and becomes forgeable and repudiable once a CRQC can recover its private key.
 
 # Security Considerations
 
