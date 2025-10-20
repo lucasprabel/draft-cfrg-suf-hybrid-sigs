@@ -238,7 +238,7 @@ Verify hybrid signature
 ~~~
 
 ## Security and Applicability
-The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID schem must have unique responses and the second signature conmponent (post-quantum component) must fulfill message-bound security (MBS){{-BUFF}} and random-message validity (RMV){{-Jan25}}.
+The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID schem must have unique responses and the second signature conmponent (post-quantum component) must fulfill message-bound security (MBS){{BUFF}} and random-message validity (RMV){{Jan25}}.
 
 The first requirement (on the traditional scheme) is fulfilled by EdDSA which is built from an ID scheme with unique responses. The second requirement (on the post-qunatum scheme) is fulfilled by any of NIST standards/winners, i.e. ML-DSA, SLH-DSA, Falcon (to be FN-DSA).
 
