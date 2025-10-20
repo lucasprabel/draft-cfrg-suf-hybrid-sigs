@@ -71,7 +71,7 @@ This document proposes a generic hybrid signature construction that achieves str
 
 # Introduction
 
-With the emergence of post-quantum (PQ) digital signatures, several working groups (including LAMPS, TLS and JOSE) have explored hybrid constructions combining traditional and PQ algorithms. The main goal is to ensure long-term security during the transition to post-quantum cryptography, acknowledging that traditional algorithms are more mature than post-quantum ones and that the latter still raise uncertainty about their security.
+With the emergence of post-quantum (PQ) digital signatures, several groups (including ETSI CYBER amd IETF LAMPS, TLS JOSE, SSHM) have explored hybrid constructions combining traditional and PQ algorithms. The main goal is to ensure long-term security during the transition to post-quantum cryptography, acknowledging that traditional algorithms are more mature than post-quantum ones and that the latter still raise uncertainty about their security.
 
 Current composite hybrid schemes typically provide existential unforgeability under chosen-message attacks (EUF-CMA), but do not ensure strong unforgeability. SUF-CMA extends EUF-CMA by requiring that it be computationally infeasible to produce a new valid signature even for a message-signature pair previously observed. This distinction has practical implications in preventing message replay, transaction duplication, and log poisoning.
 
@@ -116,7 +116,7 @@ Generate component keys
 
 - Generate `(pk1, sk1)` for the traditional scheme.
 - Generate `(pk2, sk2)` for the post-quantum scheme.
-- The hybrid public key is `pk = (pk1, pk2)`.
+- The hybrid public key is `pk = (pk1 || pk2)`.
 ~~~
 
 ## Hybrid Sign
@@ -156,7 +156,8 @@ Verify hybrid signature
 
 ## Related works
 
-The hybrid construction in {{-LAMPS-COMPOSITE}} needs to have both components providing SUF-CMA security in order for the composite scheme to be SUF-CMA secure. In this document, only the second component needs to be SUF-CMA so that the hybrid scheme achieves SUF-CMA security.
+The hybrid construction in {{-LAMPS-COMPOSITE}} only provides SUF-CMA security if both components is providing SUF-CMA security and one of the components are deterministic. As traditional signatures do not provide any security against quantum attackers, when {{-LAMPS-COMPOSITE}} is used for
+PQ/T hybrid scheme, it does not provide SUF-CMA security against quantum attackers. In this document, only the second component needs to be SUF-CMA so that the hybrid scheme achieves SUF-CMA security.
 
 In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construction proposed in this document cannot be parallelized. Indeed, computing the hybrid signature `s = (s1 || s2)` requires to compute `s1 = Sign_1(sk1, m')` first in order to compute `s2 = Sign_2(sk2, m' || s1)`.
 
