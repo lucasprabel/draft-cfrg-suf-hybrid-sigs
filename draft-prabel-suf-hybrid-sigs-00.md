@@ -86,13 +86,13 @@ This document proposes a generic hybrid signature construction that achieves str
 
 # Introduction
 
-With the emergence of post-quantum (PQ) digital signatures, several groups (including ETSI CYBER amd IETF LAMPS, TLS JOSE, SSHM) have explored hybrid constructions combining traditional and PQ algorithms. The main goal is to ensure long-term security during the transition to post-quantum cryptography, acknowledging that traditional algorithms are more mature than post-quantum ones and that the latter still raise uncertainty about their security.
+With the emergence of post-quantum (PQ) digital signatures, several groups (including ETSI CYBER and IETF LAMPS, TLS JOSE, SSHM) have explored hybrid constructions combining traditional and PQ algorithms. The main goal is to ensure long-term security during the transition to post-quantum cryptography, acknowledging that traditional algorithms are more mature than post-quantum ones and that the latter still raise uncertainty about their security.
 
 Current composite hybrid schemes typically provide existential unforgeability under chosen-message attacks (EUF-CMA), but do not ensure strong unforgeability. SUF-CMA extends EUF-CMA by requiring that it be computationally infeasible to produce a new valid signature even for a message-signature pair previously observed. This distinction has practical implications in preventing message replay, transaction duplication, and log poisoning.
 
 Although several recent algorithms such as EdDSA, ML-DSA, and SLH-DSA claim to achieve SUF-CMA security, some popular traditional schemes (RSA, ECDSA) only achieve EUF-CMA. Therefore, constructing a hybrid digital signature scheme maintaining SUF-CMA when one component does not is of particular interest.
 
-To addresses this concern, this document specifies a generic hybrid construction that guarantees SUF-CMA security when the second underlying component (e.g. the PQ scheme) is SUF-CMA. The construction is quite simple and can be applied generically across PQ/T signature combinations. It is originally proposed in {{BH23}}, though its SUF-CMA is not analyzed in the article.The construction could also be used for a hybrid PQ/PQ security, relying on two post-quantum components.
+To address this concern, this document specifies a generic hybrid construction that guarantees SUF-CMA security when the second underlying component (e.g. the PQ scheme) is SUF-CMA. The construction is quite simple and can be applied generically across PQ/T signature combinations. It is originally proposed in {{BH23}}, though its SUF-CMA is not analyzed in the article.The construction could also be used for a hybrid PQ/PQ security, relying on two post-quantum components.
 
 
 # Conventions and Definitions
@@ -152,7 +152,7 @@ Generate hybrid signature
 
 In the computation of the message representative:
 - `Prefix` is the byte encoding of the string "SUFHybridSignature2025", which in hexadecimal is "5355464879627269645369676E617475726532303235".
-- `Label`: a specific label which is specific to the particular component algorithms being used.
+- `Label`: a label which is specific to the particular component algorithms being used.
 - `len(ctx)`: a single byte representing the length of `ctx`.
 - `ctx`: the context bytes.
 - `PH(m)`: the hash of the message to be signed.
@@ -181,8 +181,8 @@ In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construct
 
 The proposed construction ensures that the overall scheme is SUF-CMA as long as only one component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
 
-The hybrid can be used for signature schemes that are built from the Fiat-Shamir pardigm as the first component and from any signature scheme as the second compoenent. Hence, they use a canonical identification scheme (ID) underlying a Fiat-Shamir construction and a signature scheme (Sig_2).
-This applies to combining EdDSA and any post-qunatum signature scheme, for example ML-DSA.
+The hybrid can be used for signature schemes that are built from the Fiat-Shamir paradigm as the first component and from any signature scheme as the second compoenent. Hence, they use a canonical identification scheme (ID) underlying a Fiat-Shamir construction and a signature scheme (Sig_2).
+This applies to combining EdDSA and any post-quantum signature scheme, for example ML-DSA.
 
 Before signing a message `m`, the hybrid scheme derives a message representative `m'` from `m` to address specific security concerns, and in particular to achieve non-separability, following a similar approach to {{-LAMPS-COMPOSITE}}.
 
@@ -232,15 +232,15 @@ Verify hybrid signature
 - Parse s as (rsp || s2)
 - Compute chl = PH(2 || s2)
 - Compute com = ID.ExtCom(pk1, ch, rsp)
-- Compute m'' = = PH(1 || m' || com)
+- Compute m'' = PH(1 || m' || com)
 - Compute Verify_2(pk2, m'', s2)
 - Accept if verification succeeds.
 ~~~
 
 ## Security and Applicability
-The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID schem must have unique responses and the second signature conmponent (post-quantum component) must fulfill message-bound security (MBS){{BUFF}} and random-message validity (RMV){{Jan25}}.
+The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID scheme must have unique responses and the second signature component (post-quantum component) must fulfill message-bound security (MBS){{BUFF}} and random-message validity (RMV){{Jan25}}.
 
-The first requirement (on the traditional scheme) is fulfilled by EdDSA which is built from an ID scheme with unique responses. The second requirement (on the post-qunatum scheme) is fulfilled by any of NIST standards/winners, i.e. ML-DSA, SLH-DSA, Falcon (to be FN-DSA).
+The first requirement (on the traditional scheme) is fulfilled by EdDSA which is built from an ID scheme with unique responses. The second requirement (on the post-quantum scheme) is fulfilled by any of NIST standards/winners, i.e. ML-DSA, SLH-DSA, Falcon (to be FN-DSA).
 
 
 
@@ -301,7 +301,7 @@ or
 
 - Reuse an existing `(m, s1)` pair with a modified `s2`, which again breaks SUF-CMA of the second scheme.
 
-Consequently, if the second component if SUF-CMA secure, the hybrid construction remains SUF-CMA secure even when the first component provides only EUF-CMA security.
+Consequently, if the second component is SUF-CMA secure, the hybrid construction remains SUF-CMA secure even when the first component provides only EUF-CMA security.
 
 In contrast, if the second scheme were only EUF-CMA, the second attack (re-signing the same message differently) would no longer be excluded, and the hybrid construction would not be SUF-CMA secure.
 
