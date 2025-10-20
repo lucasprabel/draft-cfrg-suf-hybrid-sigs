@@ -5,7 +5,7 @@ title: "Hybrid Digital Signatures with Strong Unforgeability"
 abbrev: "SUF Hybrid Signature"
 category: std
 
-docname: draft-prabel-cfrg-suf-hybrid-sigs
+docname: draft-prabel-cfrg-suf-hybrid-sigs-00
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
