@@ -38,6 +38,9 @@ author:
     region: Karnataka
     country: India
     email: "kondtir@gmail.com"
+ - name: John | Preuß Mattsson
+   org: Ericsson AB
+   email: john.mattsson@ericsson.com
 
 informative:
  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYBRID-TERMINOLOGY
