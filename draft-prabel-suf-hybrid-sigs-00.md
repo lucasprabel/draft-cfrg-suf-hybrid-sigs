@@ -62,6 +62,21 @@ informative:
       - ins: J. Janneck
         name: Jonas Janneck
    target: https://eprint.iacr.org/2025/1844.pdf
+ BUFF:
+   title: "BUFFing signature schemes beyond unforgeability and the case of post-quantum signatures"
+   date: 2021
+   author:
+      - ins: C. Cremers
+        name: Cas Cremers
+      - ins: S. Düzlü
+        name: Samed Düzlü
+      - ins: R. Fiedler
+        name: Rune Fiedler
+      - ins: M. Fischlin
+        name: Marc Fischlin
+      - ins: C. Janson
+        name: Christian Janson
+   target: https://ieeexplore.ieee.org/document/9519420
 
 --- abstract
 
