@@ -62,6 +62,21 @@ informative:
       - ins: J. Janneck
         name: Jonas Janneck
    target: https://eprint.iacr.org/2025/1844.pdf
+ BUFF:
+   title: "BUFFing signature schemes beyond unforgeability and the case of post-quantum signatures"
+   date: 2021
+   author:
+      - ins: C. Cremers
+        name: Cas Cremers
+      - ins: S. Düzlü
+        name: Samed Düzlü
+      - ins: R. Fiedler
+        name: Rune Fiedler
+      - ins: M. Fischlin
+        name: Marc Fischlin
+      - ins: C. Janson
+        name: Christian Janson
+   target: https://ieeexplore.ieee.org/document/9519420
 
 --- abstract
 
@@ -161,7 +176,73 @@ PQ/T hybrid scheme, it does not provide SUF-CMA security against quantum attacke
 
 In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construction proposed in this document cannot be parallelized. Indeed, computing the hybrid signature `s = (s1 || s2)` requires to compute `s1 = Sign_1(sk1, m')` first in order to compute `s2 = Sign_2(sk2, m' || s1)`.
 
-In {{Jan25}}, three signature combiners are introduced. These combiners preserve strong unforgeability as long as at least one of the underlying schemes is strongly unforgeable. Several concrete instantiations with compact signature size are provided.
+
+# Non-black-box Construction
+
+The proposed construction ensures that the overall scheme is SUF-CMA as long as only one component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
+
+The hybrid can be used for signature schemes that are built from the Fiat-Shamir pardigm as the first component and from any signature scheme as the second compoenent. Hence, they use a canonical identification scheme (ID) underlying a Fiat-Shamir construction and a signature scheme (Sig_2).
+This applies to combining EdDSA and any post-qunatum signature scheme, for example ML-DSA.
+
+Before signing a message `m`, the hybrid scheme derives a message representative `m'` from `m` to address specific security concerns, and in particular to achieve non-separability, following a similar approach to {{-LAMPS-COMPOSITE}}.
+
+## Hybrid Key Generation
+
+~~~
+Generate component keys
+
+- Generate `(pk1, sk1)` for the (traditional) ID scheme.
+- Generate `(pk2, sk2)` for the (post-quantum) signature scheme.
+- The hybrid public key is `pk = (pk1, pk2)`.
+~~~
+
+## Hybrid Sign
+
+The Hybrid.Sign algorithm consists of applying the Fiat-Shamir paradigm for the first signature component. During the process (after computing the commitment is created), the second component is applied by signing the message and the commitment. The remainder of the Fiat-Shamir signature is computed using the second signature component instead of the message and the commitment as usual.
+
+~~~
+Generate the message representative
+
+- Compute m' = Prefix || Label || len(ctx) || ctx || pk's || PH(m)
+
+Generate hybrid signature
+
+- Compute (com, st) = ID.Com(sk1)
+- Compute m'' = PH(1 || m' || com)
+- Compute s2 = Sig.Sign_2(sk2, m'')
+- Compute chl = PH(2 || s2)
+- Compute rsp = ID.Rsp(sk1, com, chl, st)
+- Output the hybrid signature s = (rsp || s2)
+~~~
+
+In the computation of the message representative:
+- `Prefix` is the byte encoding of the string "SUFHybridSignature2025", which in hexadecimal is "5355464879627269645369676E617475726532303235".
+- `Label`: a specific label which is specific to the particular component algorithms being used.
+- `len(ctx)`: a single byte representing the length of `ctx`.
+- `ctx`: the context bytes.
+- `pk's`: the concatenation of pk1 and pk2.
+- `PH(m)`: the hash of the message to be signed.
+
+## Hybrid Verify
+
+~~~
+Verify hybrid signature
+
+- Compute m' = Prefix || Label || len(ctx) || ctx || pk's || PH(m)
+- Parse s as (rsp || s2)
+- Compute chl = PH(2 || s2)
+- Compute com = ID.ExtCom(pk1, ch, rsp)
+- Compute m'' = = PH(1 || m' || com)
+- Compute Verify_2(pk2, m'', s2)
+- Accept if verification succeeds.
+~~~
+
+## Security and Applicability
+The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID schem must have unique responses and the second signature conmponent (post-quantum component) must fulfill message-bound security (MBS){{-BUFF}} and random-message validity (RMV){{-Jan25}}.
+
+The first requirement (on the traditional scheme) is fulfilled by EdDSA which is built from an ID scheme with unique responses. The second requirement (on the post-qunatum scheme) is fulfilled by any of NIST standards/winners, i.e. ML-DSA, SLH-DSA, Falcon (to be FN-DSA).
+
+
 
 # Why the Binding Hybrid is Required
 
