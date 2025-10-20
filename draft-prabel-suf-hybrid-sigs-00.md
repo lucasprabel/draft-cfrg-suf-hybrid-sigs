@@ -82,6 +82,8 @@ informative:
 
 This document proposes a generic hybrid signature construction that achieves strong unforgeability under chosen-message attacks (SUF-CMA), provided that the second component (typically the post-quantum one) is SUF-CMA secure. The proposed hybrid construction differs from the current composite hybrid approach by binding the second (post-quantum) signature to the concatenation of the message and the first (traditional) signature. This approach ensures that hybrid signatures maintain SUF-CMA security even when the first component only provides EUF-CMA security.
 
+In addition to this general hybrid construction, this document also proposes a non-black-box variant specifically tailored for schemes built from the Fiat-Shamir paradigm. This variant is SUF-CMA secure as long as only one component is SUF-CMA secure.
+
 --- middle
 
 # Introduction
@@ -179,7 +181,7 @@ In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construct
 
 # Non-black-box Construction
 
-The proposed construction ensures that the overall scheme is SUF-CMA as long as only one component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
+The proposed construction of this section ensures that the overall scheme is SUF-CMA as long as only one component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
 
 The hybrid can be used for signature schemes that are built from the Fiat-Shamir paradigm as the first component and from any signature scheme as the second compoenent. Hence, they use a canonical identification scheme (ID) underlying a Fiat-Shamir construction and a signature scheme (Sig_2).
 This applies to combining EdDSA and any post-quantum signature scheme, for example ML-DSA.
@@ -198,7 +200,7 @@ Generate component keys
 
 ## Hybrid Sign
 
-The Hybrid.Sign algorithm consists of applying the Fiat-Shamir paradigm for the first signature component. During the process (after computing the commitment is created), the second component is applied by signing the message and the commitment. The remainder of the Fiat-Shamir signature is computed using the second signature component instead of the message and the commitment as usual.
+The Hybrid.Sign algorithm consists of applying the Fiat-Shamir paradigm for the first signature component. During the process (after the commitment has been computed), the second component is applied by signing the message and the commitment. The remainder of the Fiat-Shamir signature is computed using the second signature component instead of the message and the commitment as usual.
 
 ~~~
 Generate the message representative
