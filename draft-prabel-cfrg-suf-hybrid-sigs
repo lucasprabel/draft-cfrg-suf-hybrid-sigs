@@ -5,7 +5,7 @@ title: "Hybrid Digital Signatures with Strong Unforgeability"
 abbrev: "SUF Hybrid Signature"
 category: std
 
-docname: draft-prabel-suf-hybrid-sigs
+docname: draft-prabel-cfrg-suf-hybrid-sigs
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -17,6 +17,12 @@ keyword:
  - CFRG
  - Migration
  - PQC
+venue:
+  group: Cryptography Forum
+  type: Research Group
+  mail: cfrg@ietf.org
+  arch: https://mailarchive.ietf.org/arch/browse/cfrg/
+  github: lucasprabel/draft-cfrg-suf-hybrid-sigs
 
 author:
  -  ins: L. Prabel
