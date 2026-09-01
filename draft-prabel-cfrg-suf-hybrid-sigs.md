@@ -52,6 +52,7 @@ informative:
  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYBRID-TERMINOLOGY
  I-D.draft-ietf-lamps-pq-composite-sigs: LAMPS-COMPOSITE
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYBRID-SPECTRUMS
+ I-D.draft-devevey-cfrg-silithium: SILITHIUM
  BH23:
    title: "A Note on Hybrid Signature Schemes"
    date: July 2023
@@ -184,6 +185,7 @@ PQ/T hybrid scheme, it does not provide SUF-CMA security against quantum attacke
 
 In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construction proposed in this document cannot be parallelized. Indeed, computing the hybrid signature `s = (s1 || s2)` requires to compute `s1 = Sign_1(sk1, m')` first in order to compute `s2 = Sign_2(sk2, m' || s1)`.
 
+Another related construction is {{-SILITHIUM}}, which combines EC-Schnorr and ML-DSA. Although presented as a standalone scheme rather than a generic framework, its signing process follows a pattern similar to the non-black-box construction described in this document: the post-quantum (ML-DSA) signature is computed over a commitment produced during the traditional (EC-Schnorr) signing process, and the traditional challenge is then derived from that post-quantum signature. This binding mechanism illustrates a concrete instantiation of the non-black-box approach and achieves comparable strong unforgeability guarantees.
 
 # Non-black-box Construction
 
