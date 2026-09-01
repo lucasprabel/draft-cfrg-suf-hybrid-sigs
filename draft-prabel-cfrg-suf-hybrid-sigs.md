@@ -50,7 +50,6 @@ author:
 
 informative:
  RFC9794:
-   title: "Terminology for Post-Quantum Traditional Hybrid Schemes"
  I-D.draft-ietf-lamps-pq-composite-sigs: LAMPS-COMPOSITE
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYBRID-SPECTRUMS
  I-D.draft-devevey-cfrg-silithium: SILITHIUM
