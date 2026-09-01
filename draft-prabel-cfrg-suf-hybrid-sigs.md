@@ -49,7 +49,8 @@ author:
    email: john.mattsson@ericsson.com
 
 informative:
- I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYBRID-TERMINOLOGY
+ RFC9794:
+   title: "Terminology for Post-Quantum Traditional Hybrid Schemes"
  I-D.draft-ietf-lamps-pq-composite-sigs: LAMPS-COMPOSITE
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYBRID-SPECTRUMS
  I-D.draft-devevey-cfrg-silithium: SILITHIUM
@@ -108,7 +109,7 @@ To address this concern, this document specifies a generic hybrid construction t
 
 {::boilerplate bcp14-tagged}
 
-This document follows the terminology for post-quantum hybrid schemes defined in {{-HYBRID-TERMINOLOGY}}.
+This document follows the terminology for post-quantum hybrid schemes defined in {{-RFC9794}}.
 
 This section recalls some of this terminology, but also adds other definitions used throughout the whole document:
 
