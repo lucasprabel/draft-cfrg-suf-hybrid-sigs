@@ -109,7 +109,7 @@ To address this concern, this document specifies a generic hybrid construction t
 
 {::boilerplate bcp14-tagged}
 
-This document follows the terminology for post-quantum hybrid schemes defined in {{-RFC9794}}.
+This document follows the terminology for post-quantum hybrid schemes defined in {{RFC9794}}.
 
 This section recalls some of this terminology, but also adds other definitions used throughout the whole document:
 
