@@ -249,7 +249,7 @@ Verify hybrid signature
 - Compute m' = Prefix || Label || len(ctx) || ctx || pk's || PH(m)
 - Parse s as (rsp || s2)
 - Compute chl = PH(2 || s2)
-- Compute com = ID.ExtCom(pk1, ch, rsp)
+- Compute com = ID.ExtCom(pk1, chl, rsp)
 - Compute m'' = PH(1 || m' || com)
 - Compute Verify_2(pk2, m'', s2)
 - Accept if verification succeeds.
