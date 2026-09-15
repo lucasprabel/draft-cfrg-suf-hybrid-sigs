@@ -334,9 +334,10 @@ signature substitution.
 
 The document {{-HYBRID-SPECTRUMS}} defines both notions of Weak Non-Separability (WNS) and Strong Non-Separability (SNS).
 
-The hybrid construction in this document achieves WNS because the `Prefix` of the message representative `m'` is an evidence that a verifier may be able to identify, preventing the validation of a component signature which would have been removed from the composite signature.
+The black-box hybrid construction in this document achieves WNS because the `Prefix` of the message representative `m'` is an evidence that a verifier may be able to identify, preventing the validation of a component signature which would have been removed from the composite signature.
 
 However, SNS is not achieved, as `s1` stripped from a composite signature `s = (s1 || s2)` is a valid component signature of the message `m'` and `s2 ` is a valid component signature of the message `m' || s1`.
+
 
 # IANA Considerations
 
