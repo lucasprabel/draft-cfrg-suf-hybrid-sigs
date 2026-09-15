@@ -160,6 +160,7 @@ Generate hybrid signature
 ~~~
 
 In the computation of the message representative:
+
 - `Prefix` is the byte encoding of the string "SUFHybridSignature2025", which in hexadecimal is "5355464879627269645369676E617475726532303235".
 - `Label`: a label which is specific to the particular component algorithms being used.
 - `len(ctx)`: a single byte representing the length of `ctx`.
@@ -226,6 +227,7 @@ Generate hybrid signature
 ~~~
 
 In the computation of the message representative:
+
 - `Prefix` is the byte encoding of the string "SUFHybridSignature2025", which in hexadecimal is "5355464879627269645369676E617475726532303235".
 - `Label`: a specific label which is specific to the particular component algorithms being used.
 - `len(ctx)`: a single byte representing the length of `ctx`.
