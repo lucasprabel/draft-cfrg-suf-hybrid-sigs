@@ -129,7 +129,7 @@ They can also be called quantum-resistant or quantum-safe algorithms.
 
 # Proposed Construction
 
-The proposed construction ensures that the second (nested) signature binds the first (nested) signature, making the overall scheme SUF-CMA as long as the (typically PQ) component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
+The proposed construction ensures that the second (nesting) signature binds the first (nested) signature, making the overall scheme SUF-CMA as long as the (typically PQ) component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
 
 Before signing a message `m`, the hybrid scheme derives a message representative `m'` from `m` to address specific security concerns, and in particular to achieve non-separability, following a similar approach to {{-LAMPS-COMPOSITE}}.
 
