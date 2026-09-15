@@ -101,7 +101,7 @@ Current composite hybrid schemes typically provide existential unforgeability un
 
 Although several recent algorithms such as EdDSA, ML-DSA, and SLH-DSA claim to achieve SUF-CMA security, some popular traditional schemes (RSA, ECDSA) only achieve EUF-CMA. Therefore, constructing a hybrid digital signature scheme maintaining SUF-CMA when one component does not is of particular interest.
 
-To address this concern, this document specifies a generic hybrid construction that guarantees SUF-CMA security when the second underlying component (e.g. the PQ scheme) is SUF-CMA. The construction is quite simple and can be applied generically across PQ/T signature combinations. It is originally proposed in {{BH23}}, though its SUF-CMA is not analyzed in the article.The construction could also be used for a hybrid PQ/PQ security, relying on two post-quantum components.
+To address this concern, this document specifies a generic hybrid construction that guarantees SUF-CMA security when the second underlying component (e.g. the PQ scheme) is SUF-CMA. The construction is quite simple and can be applied generically across PQ/T signature combinations. It is originally proposed in {{BH23}}, though its SUF-CMA is not analyzed in the article. The construction could also be used for a hybrid PQ/PQ security, relying on two post-quantum components.
 
 
 # Conventions and Definitions
@@ -191,7 +191,7 @@ Another related construction is {{-SILITHIUM}}, which combines EC-Schnorr and ML
 
 The proposed construction of this section ensures that the overall scheme is SUF-CMA as long as only one component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
 
-The hybrid can be used for signature schemes that are built from the Fiat-Shamir paradigm as the first component and from any signature scheme as the second compoenent. Hence, they use a canonical identification scheme (ID) underlying a Fiat-Shamir construction and a signature scheme (Sig_2).
+The hybrid can be used for signature schemes that are built from the Fiat-Shamir paradigm as the first component and from any signature scheme as the second component. Hence, they use a canonical identification scheme (ID) underlying a Fiat-Shamir construction and a signature scheme (Sig_2).
 This applies to combining EdDSA and any post-quantum signature scheme, for example ML-DSA.
 
 Before signing a message `m`, the hybrid scheme derives a message representative `m'` from `m` to address specific security concerns, and in particular to achieve non-separability, following a similar approach to {{-LAMPS-COMPOSITE}}.
@@ -336,7 +336,7 @@ The document {{-HYBRID-SPECTRUMS}} defines both notions of Weak Non-Separability
 
 The black-box hybrid construction in this document achieves WNS because the `Prefix` of the message representative `m'` is an evidence that a verifier may be able to identify, preventing the validation of a component signature which would have been removed from the composite signature.
 
-However, SNS is not achieved, as `s1` stripped from a composite signature `s = (s1 || s2)` is a valid component signature of the message `m'` and `s2 ` is a valid component signature of the message `m' || s1`.
+However, SNS is not achieved, as `s1` stripped from a composite signature `s = (s1 || s2)` is a valid component signature of the message `m'` and `s2` is a valid component signature of the message `m' || s1`.
 
 
 # IANA Considerations
