@@ -268,7 +268,7 @@ Hybrid constructions will have to provide SUF-CMA at the artifact level to ensur
 
 Any successful forgery of a binding hybrid must fall into one of two categories:
 
-* New second signature on a new input:  
+* New signature on a new input:  
   The attacker generates a new traditional signature `s1*` that the legitimate signer never produced. The attacker would then need to forge a valid `s2*` over the concatenation `m' || s1*`.  Producing such an `s2*` is a forgery against the PQC algorithm.
 
 * Different second-signature on an already-signed input:  
