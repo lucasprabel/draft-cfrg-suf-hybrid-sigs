@@ -210,6 +210,13 @@ Generate component keys
 
 The Hybrid.Sign algorithm consists of applying the Fiat-Shamir paradigm for the first signature component. During the process (after the commitment has been computed), the second component is applied by signing the message and the commitment. The remainder of the Fiat-Shamir signature is computed using the second signature component instead of the message and the commitment as usual.
 
+We us the following notations:
+
+- `com`: the commitment output by `ID.Com`.
+- `st`: the internal state output by `ID.Com(sk1)` alongside `com`.
+- `chl`: the challenge.
+- `rsp`: the response of the identification scheme.
+
 ~~~
 Generate the message representative
 
