@@ -299,7 +299,9 @@ Consequently, ECDSA can only be used in a binding hybrid to preserve non-repudia
 
 ## Security Model and Motivation
 
-The hybrid construction described in this document aims to guarantee strong unforgeability of the composite signature whenever the second component is SUF-CMA secure. This is in contrast to the composite construction in {{-LAMPS-COMPOSITE}}, where SUF-CMA of the composite generally requires both components to be SUF-CMA. The design proposed here strengthens that property: SUF-CMA of the overall construction depends only on the SUF-CMA of the second component, regardless of the security level of the first one.
+Both constructions in this document assume each component individually provides at least EUF-CMA security (the minimal security baseline for a signature scheme). Under this assumption, both constructions already achieve EUF-CMA as long as at least one component is EUF-CMA secure. This document's contribution is to additionally achieve SUF-CMA, which composite constructions such as {{-LAMPS-COMPOSITE}} do not guarantee in general.
+
+The black-box construction (Section 3) aims to guarantee strong unforgeability of the composite signature whenever the second component is SUF-CMA secure. This is in contrast to {{-LAMPS-COMPOSITE}}, where SUF-CMA of the composite generally requires both components to be SUF-CMA. The non-black-box construction (Section 4) strengthens this further: because the Fiat-Shamir response is bound to the second signature with `chl = PH(2 || s2)`, SUF-CMA of the overall construction holds if either component is SUF-CMA secure.
 
 ## SUF-CMA Security
 
