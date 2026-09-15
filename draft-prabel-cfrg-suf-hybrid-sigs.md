@@ -87,9 +87,9 @@ informative:
 
 --- abstract
 
-This document proposes a generic hybrid signature construction that achieves strong unforgeability under chosen-message attacks (SUF-CMA), provided that the second component (typically the post-quantum one) is SUF-CMA secure. The proposed hybrid construction differs from the current composite hybrid approach by binding the second (post-quantum) signature to the concatenation of the message and the first (traditional) signature. This approach ensures that hybrid signatures maintain SUF-CMA security even when the first component only provides EUF-CMA security.
+This document proposes two PQ/T (Post-Quantum/Traditional) hybrid signature constructions that achieve strong unforgeability under chosen-message attacks (SUF-CMA). The first, a black-box construction, achieves SUF-CMA security provided that the second component (typically the post-quantum one) is SUF-CMA secure; it differs from the current composite hybrid approach by binding the second (post-quantum) signature to the concatenation of the message and the first (traditional) signature. This approach ensures that hybrid signatures maintain SUF-CMA security even when the first component only provides EUF-CMA security.
 
-In addition to this general hybrid construction, this document also proposes a non-black-box variant specifically tailored for schemes built from the Fiat-Shamir paradigm. This variant is SUF-CMA secure as long as only one component is SUF-CMA secure.
+The second, a non-black-box construction, requires the first (traditional) component to be built from the Fiat-Shamir paradigm, and binds the post-quantum signature directly into that component's challenge computation rather than treating it as an opaque sign/verify oracle. This variant is SUF-CMA secure as long as only one of the two components is SUF-CMA secure.
 
 --- middle
 
