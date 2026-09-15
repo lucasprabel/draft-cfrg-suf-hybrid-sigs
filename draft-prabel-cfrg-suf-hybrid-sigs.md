@@ -181,8 +181,7 @@ Verify hybrid signature
 
 ## Related works
 
-The hybrid construction in {{-LAMPS-COMPOSITE}} only provides SUF-CMA security if both components is providing SUF-CMA security and one of the components are deterministic. As traditional signatures do not provide any security against quantum attackers, when {{-LAMPS-COMPOSITE}} is used for
-PQ/T hybrid scheme, it does not provide SUF-CMA security against quantum attackers. In this document, only the second component needs to be SUF-CMA so that the hybrid scheme achieves SUF-CMA security.
+The hybrid construction in {{-LAMPS-COMPOSITE}} only provides SUF-CMA security if both components are providing SUF-CMA security and one of them is deterministic. Indeed, requiring at least one deterministic component prevents a "mix-and-match" forgery and is therefore necessary to claim SUF-CMA security. In particular, as traditional signatures do not provide any security against quantum attackers, when {{-LAMPS-COMPOSITE}} is used for PQ/T hybrid scheme, it does not provide SUF-CMA security against quantum attackers. In this document, only the second component needs to be SUF-CMA so that the hybrid scheme achieves SUF-CMA security.
 
 In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construction proposed in this document cannot be parallelized. Indeed, computing the hybrid signature `s = (s1 || s2)` requires to compute `s1 = Sign_1(sk1, m')` first in order to compute `s2 = Sign_2(sk2, m' || s1)`.
 
