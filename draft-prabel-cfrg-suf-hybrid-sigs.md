@@ -278,14 +278,15 @@ Both outcomes constitute a SUF-CMA forgery against the second component: the fir
 
 For the non-black-box construction, the binding works in both directions: the second signature `s2` is computed over the commitment `com` (and hence over the message), and the challenge `chl`, and thus the response `rsp`, is derived from `s2`. Neither component can therefore be modified independently of the other.
 
-## Loss of Non-Repudiation in Parallel Hybrids under CRQC
+## Non-Repudiation of Messages and of Signature Values
 
-As described in {{-LAMPS-COMPOSITE}}, composite hybrids produce multiple component signatures independently over the same message.  
-Once a CRQC can forge the traditional component, an attacker can create an alternate classical signature `s1*` for a message that already has a valid hybrid signature `(s1, s2)`.  Because the PQC signature `s2` remains valid independently of the classical signature, the modified pair `(s1*, s2)` also verifies successfully.
+Non-repudiation (the signer's inability to deny having signed a message), relies on EUF-CMA security. Once a CRQC breaks the traditional component, it relies entirely on the PQ component, for parallel as well as binding hybrids: since `s2` still is a valid signature of the message, a CRQC does not allow the signer to repudiate it.
 
-While authenticity of the PQC component remains intact, non-repudiation cannot be guaranteed: multiple distinct hybrid signatures `(s1, s2)` and `(s1*, s2)` can exist for the same message. Therefore, once the classical algorithm becomes breakable, parallel hybrids no longer provide single-signature semantics, the assurance that each message corresponds to exactly one, unique signature from the signer.
+SUF-CMA provides non-repudiation at a finer level: every valid signature value on a message was produced by the signer. Parallel hybrids lose this property under a CRQC. From a valid hybrid signature `(s1, s2)`, an attacker can forge another valid signature `(s1*, s2)` on the same message. The message remains attributable to the signer, but that signature value is not: the signer can legitimately deny having produced it, and a relying party cannot tell which signature values were actually issued. This can matter when signature values are processed or counted separately (for example for transactions, receipts, or log entries).
 
-On the contrary, this document’s hybrid construction, by binding the second signature `s2` to the first signature `s1`, ensures single-signature semantics and preserves non-repudiation.
+Both constructions in this document preserve this property after a CRQC, as long as the PQ component is SUF-CMA. In the black-box construction, `s2` covers `s1`. In the non-black-box construction, `rsp` is determined by `s2` through the challenge.
+
+Note that SUF-CMA does not make signatures unique: a signer using a randomized component can produce several valid signatures on the same message, and SUF-CMA only guarantees that all of them originate from the signer.
 
 ## ECDSA vs EdDSA in Hybrid Constructions
 
