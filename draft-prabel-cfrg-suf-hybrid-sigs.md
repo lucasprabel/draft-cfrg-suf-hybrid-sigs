@@ -278,25 +278,21 @@ Both outcomes constitute a SUF-CMA forgery against the second component: the fir
 
 For the non-black-box construction, the binding works in both directions: the second signature `s2` is computed over the commitment `com` (and hence over the message), and the challenge `chl`, and thus the response `rsp`, is derived from `s2`. Neither component can therefore be modified independently of the other.
 
-## Non-Repudiation of Messages and of Signature Values
-
-Non-repudiation (the signer's inability to deny having signed a message), relies on EUF-CMA security. Once a CRQC breaks the traditional component, it relies entirely on the PQ component, for parallel as well as binding hybrids: since `s2` still is a valid signature of the message, a CRQC does not allow the signer to repudiate it.
-
-SUF-CMA provides non-repudiation at a finer level: every valid signature value on a message was produced by the signer. Parallel hybrids lose this property under a CRQC. From a valid hybrid signature `(s1, s2)`, an attacker can forge another valid signature `(s1*, s2)` on the same message. The message remains attributable to the signer, but that signature value is not: the signer can legitimately deny having produced it, and a relying party cannot tell which signature values were actually issued. This can matter when signature values are processed or counted separately (for example for transactions, receipts, or log entries).
-
-Both constructions in this document preserve this property after a CRQC, as long as the PQ component is SUF-CMA. In the black-box construction, `s2` covers `s1`. In the non-black-box construction, `rsp` is determined by `s2` through the challenge.
-
-Note that SUF-CMA does not make signatures unique: a signer using a randomized component can produce several valid signatures on the same message, and SUF-CMA only guarantees that all of them originate from the signer.
-
 ## ECDSA vs EdDSA in Hybrid Constructions
 
-Even though both ECDSA (secp256r1/secp384r1) and EdDSA (Ed25519/Ed448) become mathematically breakable once a CRQC can derive private keys from public keys, their behaviour in hybrid constructions differs significantly:
+Neither ECDSA (secp256r1/secp384r1) nor EdDSA (Ed25519/Ed448) are quantum-safe. However, they differ against classical adversaries:
 
-* ECDSA is randomized and non-deterministic, producing multiple distinct valid signatures for the same message. After CRQCs arrive, an attacker can generate arbitrarily many valid classical signatures, and hence multiple valid hybrids, destroying non-repudiation.
+* ECDSA is not SUF-CMA, even classically and even with deterministic nonces {{RFC6979}}: given a valid signature `(r, s)`, anyone can compute `(r, n - s)`, and this is also a valid signature on the same message.
 
-* Ed25519 and Ed448, in contrast, are deterministic and provide SUF-CMA security in their standard formulations, yielding a unique valid signature per message for a given key. This determinism eliminates malleability and preserves non-repudiation even if a CRQC later compromises the private key. In parallel hybrids, this property avoids ambiguity about which signature is authentic. In binding hybrids, EdDSA’s fixed, deterministic format enables unambiguous inclusion of `s1` in the PQC input (`m' || s1`), simplifying verification and ensuring consistent interpretation across implementations.
+* EdDSA is SUF-CMA against classical adversaries, provided that verification enforces the checks of {{RFC8032}}, in particular `0 <= S < L`. Its signing is deterministic, but this is a property of the signing algorithm only, and the verifier cannot check it. Moreover, anyone holding the private key can produce many distinct valid signatures on the same message. Once a CRQC recovers an EdDSA private key, EdDSA therefore loses SUF-CMA, just like ECDSA.
 
-Consequently, ECDSA can only be used in a binding hybrid to preserve non-repudiation, and cannot be used in a parallel hybrid, because it is not SUF-CMA and becomes forgeable and repudiable once a CRQC can recover its private key.
+This has the following consequences for hybrid constructions:
+
+* A parallel hybrid with an ECDSA component is never SUF-CMA. A parallel hybrid with an EdDSA component can be SUF-CMA against classical adversaries, but not against a quantum adversary.
+
+* The black-box construction of this document achieves SUF-CMA with either ECDSA or EdDSA as the first component, as long as the PQ component is SUF-CMA.
+
+* The non-black-box construction applies to EdDSA, which is built from an identification scheme with unique responses, but not to ECDSA, which does not follow the Fiat-Shamir paradigm. The hybrid verification MUST enforce `0 <= S < L` on the response. Otherwise, replacing `S` with `S + L` yields the same commitment and the same `s2`, so anyone can derive a second valid hybrid signature on the same message, and the construction is not SUF-CMA.
 
 # Security Considerations
 
