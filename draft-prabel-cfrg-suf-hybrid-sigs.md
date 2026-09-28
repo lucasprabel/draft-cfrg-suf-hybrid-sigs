@@ -127,7 +127,7 @@ They can also be called quantum-resistant or quantum-safe algorithms.
 
 *Component Scheme:*  Each cryptographic scheme that makes up a PQ/T hybrid scheme or PQ/T hybrid protocol.
 
-# Proposed Construction
+# Black-box Construction
 
 The proposed construction ensures that the second (nesting) signature binds the first (nested) signature, making the overall scheme SUF-CMA as long as the (typically PQ) component is SUF-CMA secure. The hybrid signature construction is defined in the following subsections.
 
