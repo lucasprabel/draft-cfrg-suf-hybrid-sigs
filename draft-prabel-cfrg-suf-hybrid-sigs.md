@@ -306,7 +306,7 @@ The black-box construction (Section 3) aims to guarantee strong unforgeability o
 
 ### Why SUF-CMA matters
 
-While EUF-CMA security could be sufficient in several use cases, weaknesses in EUF-only schemes allow "re-signing" the same message, enabling real-world exploits such as replay of messages, double receipts, and log poisoning. Moreover, many current deployed systems implicitly assume that all digital signatures are SUF-secure, and that a single unique signature exists per message.
+While EUF-CMA security could be sufficient in several use cases, weaknesses in EUF-only schemes allow signature malleability (producing a new valid signature on an already-signed message without the private key), enabling real-world exploits such as replay of messages, double receipts, and log poisoning. Moreover, many current deployed systems implicitly assume that all digital signatures are SUF-secure, and that a single unique signature exists per message.
 
 For this reason, the construction ensures that if the second component is SUF-CMA, the hybrid automatically resists replay and duplication attacks, aligning with best practices in recent signature standards (EdDSA, ML-DSA, SLH-DSA, etc.).
 
