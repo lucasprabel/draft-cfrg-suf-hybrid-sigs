@@ -276,7 +276,7 @@ For the black-box construction, any successful forgery falls into one of two cat
 
 Both outcomes constitute a SUF-CMA forgery against the second component: the first case for a new message, the second for a second valid signature on an existing message.  If the second component is SUF-CMA secure, neither case is computationally feasible, and the combined hybrid inherits SUF-CMA security.
 
-The non-black-box construction relies on a different argument (Section 4.4, {{Jan25}}).
+For the non-black-box construction, the binding works in both directions: the second signature `s2` is computed over the commitment `com` (and hence over the message), and the challenge `chl`, and thus the response `rsp`, is derived from `s2`. Neither component can therefore be modified independently of the other.
 
 ## Loss of Non-Repudiation in Parallel Hybrids under CRQC
 
