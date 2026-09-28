@@ -298,7 +298,7 @@ This has the following consequences for hybrid constructions:
 
 ## Security Model and Motivation
 
-Both constructions in this document assume each component individually provides at least EUF-CMA security (the minimal security baseline for a signature scheme). Under this assumption, both constructions already achieve EUF-CMA as long as at least one component is EUF-CMA secure. This document's contribution is to additionally achieve SUF-CMA, which composite constructions such as {{-LAMPS-COMPOSITE}} do not guarantee in general.
+Both constructions are EUF-CMA as long as at least one component is EUF-CMA secure (for the non-black-box construction, under the additional requirements of Section 4.4). This document additionally targets SUF-CMA, which constructions such as {{-LAMPS-COMPOSITE}} do not guarantee in general.
 
 The black-box construction (Section 3) aims to guarantee strong unforgeability of the composite signature whenever the second component is SUF-CMA secure. This is in contrast to {{-LAMPS-COMPOSITE}}, where SUF-CMA of the composite generally requires both components to be SUF-CMA. The non-black-box construction (Section 4) strengthens this further: because the Fiat-Shamir response is bound to the second signature with `chl = PH(2 || s2)`, SUF-CMA of the overall construction holds if either component is SUF-CMA secure.
 
