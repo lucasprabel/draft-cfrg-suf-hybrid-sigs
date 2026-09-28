@@ -266,15 +266,17 @@ The first requirement (on the traditional scheme) is fulfilled by EdDSA which is
 
 Some deployments additionally require SUF-CMA, i.e. that no party other than the signer can produce a new valid signature, even for an already-signed message. This matters for example when signature values are themselves used as identifiers, deduplication keys, or inputs to other hashes (e.g. transaction identifiers, signed log entries). While a parallel hybrid is SUF-CMA only if both components are SUF-CMA and one is deterministic, it loses SUF-CMA in particular once a CRQC breaks the traditional component. Therefore, binding the components allows SUF-CMA to rely on a single component.
 
-Any successful forgery of a binding hybrid must fall into one of two categories:
+For the black-box construction, any successful forgery falls into one of two categories:
 
 * New signature on a new input:  
-  The attacker generates a new traditional signature `s1*` that the legitimate signer never produced. The attacker would then need to forge a valid `s2*` over the concatenation `m' || s1*`.  Producing such an `s2*` is a forgery against the PQC algorithm.
+  The attacker produces a hybrid signature on an input `m' || s1*` that the legitimate signer never signed with the second component. The attacker would then need to forge a valid `s2*` over this new input. Producing such an `s2*` is a forgery against the PQC algorithm.
 
 * Different second-signature on an already-signed input:  
   The attacker reuses an existing `(m', s1)` but fabricates a distinct `s2*` for the same `(m' || s1)`, yielding two valid second signatures for one message.
 
 Both outcomes constitute a SUF-CMA forgery against the second component: the first case for a new message, the second for a second valid signature on an existing message.  If the second component is SUF-CMA secure, neither case is computationally feasible, and the combined hybrid inherits SUF-CMA security.
+
+The non-black-box construction relies on a different argument (Section 4.4, {{Jan25}})
 
 ## Loss of Non-Repudiation in Parallel Hybrids under CRQC
 
