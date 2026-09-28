@@ -312,22 +312,21 @@ For this reason, the construction ensures that if the second component is SUF-CM
 
 ### Security Rationale
 
-Intuitively, an adversary attempting to forge `(m*, s1*, s2*)` must either:
+For the black-box construction, an adversary attempting to forge `(m*, s1*, s2*)` must either:
 
-- Forge `s2*` on `(m* || s1*)`, which is infeasible if the second scheme is SUF-CMA;
+- Produce `s2*` on an input `m'* || s1*` that was never signed by the second component (because the message or `s1*` is new), which is infeasible if the second scheme is EUF-CMA;
 
 or
 
-- Reuse an existing `(m, s1)` pair with a modified `s2`, which again breaks SUF-CMA of the second scheme.
+- Reuse an existing `(m', s1)` pair with a different `s2*`, which is infeasible if the second scheme is SUF-CMA.
 
-Consequently, if the second component is SUF-CMA secure, the hybrid construction remains SUF-CMA secure even when the first component provides only EUF-CMA security.
+Consequently, if the second component is SUF-CMA, the black-box construction is SUF-CMA regardless of the security of the first component, including when the latter only provides EUF-CMA security or is fully broken by a CRQC.
 
-In contrast, if the second scheme were only EUF-CMA, the second attack (re-signing the same message differently) would no longer be excluded, and the hybrid construction would not be SUF-CMA secure.
+In contrast, if the second scheme is not SUF-CMA, the second attack is no longer excluded, and the construction is not SUF-CMA in general.
 
-This contrasts with classical composite hybrids (e.g. `trad(M) || PQ(M)`)
-where the PQ signature does not authenticate the output of the
-traditional signature, leaving possible avenues for replay or
-signature substitution.
+For the non-black-box construction, the same reasoning applies to `s2`. In addition, reusing an existing `s2` with a different response `rsp*` is excluded, because `s2` determines the challenge, and the ID scheme has unique responses (enforced by verification). The construction is therefore SUF-CMA as long as the PQ component is SUF-CMA. It is also SUF-CMA if the traditional component is SUF-CMA, under the requirements of Section 4.4.
+
+This contrasts with classical composite hybrids (e.g. `trad(M) || PQ(M)`) where the PQ signature does not authenticate the output of the traditional signature, leaving possible avenues for replay or signature substitution.
 
 ## Non-Separability
 
