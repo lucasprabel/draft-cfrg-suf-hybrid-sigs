@@ -264,7 +264,7 @@ The first requirement (on the traditional scheme) is fulfilled by EdDSA which is
 
 # Why the Binding Hybrid is Required
 
-Hybrid constructions will have to provide SUF-CMA at the artifact level to ensure single-signature semantics and non-repudiation.  In many real-world deployments the artifact signing use case is central: software releases, firmware images, signed logs, and legal/financial documents are all artifacts that rely on a single, unambiguous signature to prove provenance and integrity. A hybrid design achieves SUF-CMA only if one signature component is cryptographically bound to the other, forming a binding hybrid rather than signing the same message independently.
+Some deployments additionally require SUF-CMA, i.e. that no party other than the signer can produce a new valid signature, even for an already-signed message. This matters for example when signature values are themselves used as identifiers, deduplication keys, or inputs to other hashes (e.g. transaction identifiers, signed log entries). A hybrid design achieves SUF-CMA only if one signature component is cryptographically bound to the other, forming a binding hybrid rather than signing the same message independently.
 
 Any successful forgery of a binding hybrid must fall into one of two categories:
 
