@@ -101,7 +101,7 @@ Current composite hybrid schemes typically provide existential unforgeability un
 
 Although several recent algorithms such as EdDSA, ML-DSA, and SLH-DSA claim to achieve SUF-CMA security, some popular traditional schemes (RSA, ECDSA) only achieve EUF-CMA. Therefore, constructing a hybrid digital signature scheme maintaining SUF-CMA when one component does not is of particular interest.
 
-To address this concern, this document specifies a generic hybrid construction that guarantees SUF-CMA security when the second underlying component (e.g. the PQ scheme) is SUF-CMA. The construction is quite simple and can be applied generically across PQ/T signature combinations. It is originally proposed in {{BH23}}, though its SUF-CMA is not analyzed in the article. The construction could also be used for a hybrid PQ/PQ security, relying on two post-quantum components.
+To address this concern, this document specifies two hybrid constructions that achieve SUF-CMA security. The first is a generic (black-box) construction that guarantees SUF-CMA security when the second underlying component (e.g. the PQ scheme) is SUF-CMA. It is quite simple, can be applied generically across PQ/T signature combinations, and was originally proposed in {{BH23}}, though its SUF-CMA is not analyzed in the article. It could also be used for a hybrid PQ/PQ security, relying on two post-quantum components. The second is a non-black-box construction, for a first component built from the Fiat-Shamir paradigm (e.g. EdDSA), which guarantees SUF-CMA security as long as at least one of the two components is SUF-CMA.
 
 
 # Conventions and Definitions
