@@ -264,7 +264,7 @@ The first requirement (on the traditional scheme) is fulfilled by EdDSA which is
 
 # Why the Binding Hybrid is Required
 
-Some deployments additionally require SUF-CMA, i.e. that no party other than the signer can produce a new valid signature, even for an already-signed message. This matters for example when signature values are themselves used as identifiers, deduplication keys, or inputs to other hashes (e.g. transaction identifiers, signed log entries). A hybrid design achieves SUF-CMA only if one signature component is cryptographically bound to the other, forming a binding hybrid rather than signing the same message independently.
+Some deployments additionally require SUF-CMA, i.e. that no party other than the signer can produce a new valid signature, even for an already-signed message. This matters for example when signature values are themselves used as identifiers, deduplication keys, or inputs to other hashes (e.g. transaction identifiers, signed log entries). While a parallel hybrid is SUF-CMA only if both components are SUF-CMA and one is deterministic, it loses SUF-CMA in particular once a CRQC breaks the traditional component. Therefore, binding the components allows SUF-CMA to rely on a single component.
 
 Any successful forgery of a binding hybrid must fall into one of two categories:
 
