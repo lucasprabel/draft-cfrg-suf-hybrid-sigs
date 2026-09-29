@@ -336,6 +336,8 @@ The black-box hybrid construction in this document achieves WNS because the `Pre
 
 However, SNS is not achieved, as `s1` stripped from a composite signature `s = (s1 || s2)` is a valid component signature of the message `m'` and `s2` is a valid component signature of the message `m' || s1`.
 
+For the non-black-box construction, the two components behave differently. The PQ signature `s2` can be stripped from the hybrid signature and is a valid component signature on `m'' = PH(1 || m' || com)`, so SNS is not achieved for the PQ component. However, presenting `s2` as a signature on a chosen message would require inverting `PH`. Conversely, the traditional component cannot be separated: `rsp` alone is not an EdDSA signature, and turning `(com, rsp)` into a valid EdDSA signature on some message `M` would require the EdDSA challenge `H(com || pk1 || M)` to match `chl = PH(2 || s2)`, which is infeasible for a secure hash function. Informally, the non-black-box construction therefore achieves SNS for the traditional component, but not for the PQ component.
+
 
 # IANA Considerations
 
