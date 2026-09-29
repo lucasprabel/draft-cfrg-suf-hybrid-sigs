@@ -353,8 +353,8 @@ This document has no IANA actions.
 This appendix compares the security properties of the two constructions of this document with those of {{-SILITHIUM}}:
 
 - Black-box construction ({{black-box}}): `s1 = Sign_1(sk1, m')` and `s2 = Sign_2(sk2, m' || s1)`.
-- Non-black-box construction ({{non-black-box}}): the traditional component follows the Fiat-Shamir paradigm (e.g. EdDSA), `s2` signs `PH(1 || m' || com)`, and the challenge is `chl = PH(2 || s2)`.
-- Silithium: EC-Schnorr combined with ML-DSA. ML-DSA signs the message with the context string `R || P`, and the EC-Schnorr challenge `c` is extracted from the ML-DSA signature.
+- Non-black-box construction ({{non-black-box}}): the traditional component follows the Fiat-Shamir paradigm (e.g. EdDSA), `rsp = ID.Rsp(sk1, com, chl, st)` and `s2 = Sig.Sign_2(sk2, m'')`.
+- Silithium: EC-Schnorr combined with ML-DSA, with ML-DSA signing the message with the context string `R || P`, and the EC-Schnorr challenge `c` extracted from the ML-DSA signature.
 
 In the table below, "T" refers to the traditional component and "PQ" to the post-quantum component. A cell "PQ" (resp. "T") means that the property holds if the PQ (resp. traditional) component provides it. "PQ or T" means that the property holds as long as at least one component provides it. "PQ and T" means that both components must provide it. Against a quantum adversary, the traditional component provides no security, so a cell "PQ or T" reduces to "PQ". When a security property relies on several properties of a component, these properties are given in parentheses.
 
