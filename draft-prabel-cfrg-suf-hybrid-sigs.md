@@ -356,7 +356,7 @@ This appendix compares the security properties of the two constructions of this 
 - Non-black-box construction ({{non-black-box}}): the traditional component follows the Fiat-Shamir paradigm (e.g. EdDSA), `s2` signs `PH(1 || m' || com)`, and the challenge is `chl = PH(2 || s2)`.
 - Silithium: EC-Schnorr combined with ML-DSA. ML-DSA signs the message with the context string `R || P`, and the EC-Schnorr challenge `c` is extracted from the ML-DSA signature.
 
-In the table below, "T" refers to the traditional component and "PQ" to the post-quantum component. A cell "PQ" (resp. "T") means that the property holds if the PQ (resp. traditional) component provides it. "PQ or T" means that the property holds as long as at least one component provides it. "PQ and T" means that both components must provide it. Against an adversary equipped with a CRQC, the traditional component provides no security, so a cell "PQ or T" reduces to "PQ". When a property relies on several properties of a component, these properties are given in parentheses.
+In the table below, "T" refers to the traditional component and "PQ" to the post-quantum component. A cell "PQ" (resp. "T") means that the property holds if the PQ (resp. traditional) component provides it. "PQ or T" means that the property holds as long as at least one component provides it. "PQ and T" means that both components must provide it. Against a quantum adversary, the traditional component provides no security, so a cell "PQ or T" reduces to "PQ". When a security property relies on several properties of a component, these properties are given in parentheses.
 
 ## Summary
 
@@ -370,7 +370,7 @@ In the table below, "T" refers to the traditional component and "PQ" to the post
 | Exclusive Ownership (EO) | PQ and T (EO) | PQ (EO and MBS) | PQ (EO and MBS) |
 | Message-Bound Security (MBS) | PQ or T | PQ | PQ |
 | Traditional component | Any | Fiat-Shamir with unique responses (e.g. EdDSA) | EC-Schnorr |
-| Components used as black boxes | T and PQ | PQ only | PQ only |
+| Components used as black boxes | T and PQ | PQ | PQ |
 | Signature size | size(s1) + size(s2) | size(rsp) + size(s2) | size(x) + size(ML-DSA signature) |
 
 ## Existential Unforgeability (EUF-CMA)
