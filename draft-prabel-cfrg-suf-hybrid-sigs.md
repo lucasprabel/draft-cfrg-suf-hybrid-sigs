@@ -375,13 +375,11 @@ In the table below, "T" refers to the traditional component and "PQ" to the post
 
 ## Existential Unforgeability (EUF-CMA)
 
-In all three constructions, a valid hybrid signature on a new message requires both a valid PQ part and a valid traditional part for this message. The adversary must therefore break both components, so each construction is EUF-CMA as long as at least one component is EUF-CMA.
+Each construction is EUF-CMA as long as at least one component is EUF-CMA.
 
-In the black-box construction, a forgery on a new message `m*` contains `s1*`, a valid traditional signature on `m'*`, and `s2*`, a valid PQ signature on `m'* || s1*`. Since `m*` is new, `m'*` was never signed by the traditional component, and `m'* || s1*` was never signed by the PQ component. Thus `s1*` is a forgery against the traditional component, and `s2*` is a forgery against the PQ component.
+If the PQ component is EUF-CMA: in all three constructions, the PQ signature of a forgery on a new message is computed over an input that depends on this message (`m' || s1` for the black-box construction, `m''` for the non-black-box construction, and the message itself for Silithium). This input was never signed, so the PQ hybrid signature is a forgery against the PQ component.
 
-In the non-black-box construction, `s2*` must be a valid PQ signature on `m''* = PH(1 || m'* || com*)`, which was never signed since `m*` is new: `s2*` is a forgery against the PQ component. In addition, `rsp*` must be a valid response for the commitment `com*` and the challenge `chl* = PH(2 || s2*)`. Since `s2*` is bound to the message and the commitment, this challenge plays the same role as in a regular Fiat-Shamir signature, and `rsp*` is a forgery against the traditional component. This last argument requires the PQ component to provide message-bound security and random-message validity {{Jan25}}.
-
-In the same way for Silithium, the ML-DSA signature must be valid on a new message with context `R* || P`, and `x*` must be a valid response for the challenge `c*` extracted from this ML-DSA signature.
+If the traditional component is EUF-CMA: in the black-box construction, `s1` is a traditional signature on `m'`, which was never signed, so `s1` is a forgery against the traditional component. In the non-black-box construction and Silithium, the traditional component is a response to a challenge derived from the PQ signature, which is bound to the message and the commitment. This challenge plays the same role as in a regular Fiat-Shamir signature, so the traditional part is a forgery against the traditional component.
 
 ## Strong Unforgeability (SUF-CMA)
 
