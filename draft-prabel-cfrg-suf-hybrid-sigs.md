@@ -259,7 +259,7 @@ Verify hybrid signature
 ~~~
 
 ## Security and Applicability {#nbb-security}
-The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID scheme must have unique responses and the second signature component (post-quantum component) must fulfill message-bound security (MBS) {{BUFF}} and random-message validity (RMV) {{Jan25}}.
+The hybrid is SUF-CMA if one of the underlying signatures is SUF-CMA secure. Additionally, the ID scheme must have unique responses and the second signature component (post-quantum component) must fulfill message-bound signatures (MBS) {{BUFF}} and random-message validity (RMV) {{Jan25}}.
 
 The first requirement (on the traditional scheme) is fulfilled by EdDSA which is built from an ID scheme with unique responses. The second requirement (on the post-quantum scheme) is fulfilled by any of NIST standards/winners, i.e. ML-DSA, SLH-DSA, Falcon (to be FN-DSA).
 
@@ -368,7 +368,7 @@ In the table below, "T" refers to the traditional component and "PQ" to the post
 | Non-separability of the T component | WNS | SNS | SNS |
 | Non-separability of the PQ component | WNS | None | WNS |
 | Exclusive Ownership (EO) | PQ and T (EO) | PQ (EO and MBS) | PQ (EO and MBS) |
-| Message-Bound Security (MBS) | PQ or T | PQ | PQ |
+| Message-Bound Signatures (MBS) | PQ or T | PQ | PQ |
 | Traditional component | Any | Fiat-Shamir with unique responses (e.g. EdDSA) | EC-Schnorr |
 | Components used as black boxes | T and PQ | PQ | PQ |
 | Signature size | size(s1) + size(s2) | size(rsp) + size(s2) | size(x) + size(ML-DSA signature) |
@@ -405,7 +405,7 @@ In the non-black-box construction, `m'` includes `pk1 || pk2`. If a hybrid signa
 
 In Silithium, the same reasoning applies. If the ML-DSA public keys differ, the ML-DSA signature is valid under two different keys, which breaks EO of ML-DSA. If only the EC-Schnorr public keys `P` and `P*` differ, the contexts `R || P` and `R* || P*` differ, so the ML-DSA signature is valid for two different contexts under the same key, which breaks MBS of ML-DSA. EO therefore relies on the EO and MBS of the PQ component.
 
-## Message-Bound Security (MBS)
+## Message-Bound Signatures (MBS)
 
 *Definition:* an adversary cannot produce a signature that is valid for two different messages under the same public key {{BUFF}}.
 
