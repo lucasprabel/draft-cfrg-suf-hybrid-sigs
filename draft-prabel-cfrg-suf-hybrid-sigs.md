@@ -35,8 +35,8 @@ author:
     email: wang.guilin@huawei.com
  -  ins: J. Janneck
     fullname: Jonas Janneck
-    organization: Ruhr University Bochum
-    email: jonas.janneck@rub.de
+    organization: University of Waterloo
+    email: jjanneck@uwaterloo.ca
  -  ins: T. Reddy
     fullname: Tirumaleswar Reddy
     organization: Nokia
