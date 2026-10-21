@@ -379,7 +379,7 @@ In the table below, "T" refers to the traditional component and "PQ" to the post
 
 Each construction is EUF-CMA as long as at least one component is EUF-CMA.
 
-If the PQ component is EUF-CMA: in all three constructions, the PQ signature of a forgery on a new message is computed over an input that depends on this message (`m' || s1` for the black-box construction, `m''` for the non-black-box construction, and the message itself for Silithium). This input was never signed, so the PQ hybrid signature is a forgery against the PQ component.
+If the PQ component is EUF-CMA, in all three constructions, the PQ signature of a forgery on a new message is computed over an input that depends on this message (`m' || s1` for the black-box construction, `m''` for the non-black-box construction, and the message itself for Silithium). This input was never signed, so the PQ signature is a forgery against the PQ component.
 
 If the traditional component is EUF-CMA: in the black-box construction, `s1` is a traditional signature on `m'`, which was never signed, so `s1` is a forgery against the traditional component. In the non-black-box construction and Silithium, the traditional component is a response to a challenge derived from the PQ signature, which is bound to the message and the commitment. This challenge plays the same role as in a regular Fiat-Shamir signature, so the traditional part is a forgery against the traditional component.
 
