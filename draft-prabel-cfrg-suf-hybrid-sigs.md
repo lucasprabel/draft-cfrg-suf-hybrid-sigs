@@ -367,11 +367,13 @@ In the table below, "T" refers to the traditional component and "PQ" to the post
 | SUF-CMA | PQ | PQ or T | PQ |
 | SNS of the T component | No | Yes | Yes |
 | SNS of the PQ component | No | No | No |
-| Exclusive Ownership (EO) | PQ and T (EO) | PQ (EO and MBS) | PQ (EO and MBS) |
-| Message-Bound Signatures (MBS) | PQ or T | PQ | PQ |
+| Exclusive Ownership (EO) | PQ\* and T | PQ\* (EO and MBS) | PQ\* (EO and MBS) |
+| Message-Bound Signatures (MBS) | PQ\* or T | PQ\* | PQ\* |
 | Traditional component | Any | Fiat-Shamir with unique responses (e.g. EdDSA) | EC-Schnorr |
 | Components used as black boxes | T and PQ | PQ | None |
 | Signature size | size(s1) + size(s2) | size(rsp) + size(s2) | size(rsp) + size(s2) |
+
+\* This requirement on the PQ component is met statistically by ML-DSA, independently of the PQ hardness assumption.
 
 ## Existential Unforgeability (EUF-CMA)
 
