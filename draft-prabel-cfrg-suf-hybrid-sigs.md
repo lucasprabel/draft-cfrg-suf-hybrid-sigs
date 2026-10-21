@@ -389,11 +389,11 @@ If the traditional component is SUF-CMA: only the non-black-box construction rem
 
 ## Non-Separability
 
-In the black-box construction, both components are separable: `s1` is a valid signature on `m'`, and `s2` is a valid signature on `m' || s1`. Since both signed inputs begin with `Prefix`, the construction provides WNS, but not SNS, for both components.
+A hybrid construction provides Strong Non-Separability (SNS) for a component if an adversary, given hybrid signatures, cannot extract a signature that is valid for that component scheme, on any message. SNS is considered here with respect to the component schemes as they are specified and used on their own.
 
-In the non-black-box construction, the traditional component provides SNS: `rsp` alone is not an EdDSA signature, and using `(com, rsp)` as an EdDSA signature on some message would require the EdDSA challenge to match `chl`, which requires breaking the preimage resistance of the underlying hash. However, the PQ signature `s2` is separable, as a valid signature on the hash value `m''`.
+A component used as a black box cannot provide SNS, as the verifier has to extract its signature to verify it, so an adversary can do the same. None of the three constructions therefore provides SNS for the PQ component, and the black-box construction does not provide it for the traditional component either.
 
-Silithium behaves similarly for the traditional component, which provides SNS, since `c` is taken from the ML-DSA signature. The ML-DSA signature is separable, but because the context contains the EC-Schnorr public key `P`, a verifier may be able to identify it, which provides WNS for the PQ component.
+In the non-black-box construction, the traditional component provides SNS: `(com, rsp)` is only a valid EdDSA signature on a message `M` if the EdDSA challenge `H(com || pk1 || M)` equals `chl`, which requires breaking the preimage resistance of the hash function. A similar argument applies to the traditional component of Silithium, under an additional assumption on how the challenge is computed from the ML-DSA signature.
 
 ## Exclusive Ownership (EO)
 
