@@ -53,7 +53,7 @@ informative:
  RFC8032:
  RFC9794:
  I-D.draft-ietf-lamps-pq-composite-sigs: LAMPS-COMPOSITE
- I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYBRID-SPECTRUMS
+ RFC9955:
  I-D.draft-devevey-cfrg-silithium: SILITHIUM
  BH23:
    title: "A Note on Hybrid Signature Schemes"
@@ -333,7 +333,7 @@ This contrasts with classical composite hybrids (e.g. `trad(M) || PQ(M)`) where 
 
 ## Non-Separability
 
-The document {{-HYBRID-SPECTRUMS}} defines both notions of Weak Non-Separability (WNS) and Strong Non-Separability (SNS).
+{{RFC9955}} defines both notions of Weak Non-Separability (WNS) and Strong Non-Separability (SNS).
 
 The black-box hybrid construction in this document achieves WNS because the `Prefix` of the message representative `m'` is evidence that a verifier may be able to identify, preventing the validation of a component signature which would have been removed from the hybrid signature.
 
