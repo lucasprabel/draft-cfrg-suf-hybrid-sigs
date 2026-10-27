@@ -147,7 +147,7 @@ Generate component keys
 
 ## Hybrid Sign
 
-The Hybrid.Sign algorithm consists in signing a message `m'` derived from `m` with the first component, and then signing the concatenation `m' || s1` of the derived message with the first signature with the second component.
+The Hybrid.Sign algorithm consists of signing a message `m'` derived from `m` with the first component, and then signing the concatenation `m' || s1` of the derived message with the first signature with the second component.
 
 ~~~
 Generate the message representative
@@ -181,11 +181,11 @@ Verify hybrid signature
 - Accept if both verifications succeed.
 ~~~
 
-## Related works
+## Related Work
 
 The hybrid construction in {{-LAMPS-COMPOSITE}} only provides SUF-CMA security if both components are providing SUF-CMA security and one of them is deterministic. Indeed, requiring at least one deterministic component prevents a "mix-and-match" forgery and is therefore necessary to claim SUF-CMA security. In particular, as traditional signatures do not provide any security against quantum attackers, when {{-LAMPS-COMPOSITE}} is used for PQ/T hybrid scheme, it does not provide SUF-CMA security against quantum attackers. In this document, only the second component needs to be SUF-CMA so that the hybrid scheme achieves SUF-CMA security.
 
-In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construction proposed in this document cannot be parallelized. Indeed, computing the hybrid signature `s = (s1 || s2)` requires to compute `s1 = Sign_1(sk1, m')` first in order to compute `s2 = Sign_2(sk2, m' || s1)`.
+In contrast to {{-LAMPS-COMPOSITE}}, the signing process of the hybrid construction proposed in this document cannot be parallelized. Indeed, computing the hybrid signature `s = (s1 || s2)` requires computing `s1 = Sign_1(sk1, m')` first in order to compute `s2 = Sign_2(sk2, m' || s1)`.
 
 Another related construction is {{-SILITHIUM}}, which combines EC-Schnorr and ML-DSA. Although presented as a standalone scheme rather than a generic framework, its signing process follows a pattern similar to the non-black-box construction described in this document: the post-quantum (ML-DSA) signature is computed over a commitment produced during the traditional (EC-Schnorr) signing process, and the traditional challenge is then derived from that post-quantum signature. This binding mechanism illustrates a concrete instantiation of the non-black-box approach.
 
@@ -283,7 +283,7 @@ For the non-black-box construction, the binding works in both directions: the se
 
 ## ECDSA vs EdDSA in Hybrid Constructions
 
-Neither ECDSA (secp256r1/secp384r1) nor EdDSA (Ed25519/Ed448) are quantum-safe. However, they differ against classical adversaries:
+Neither ECDSA (secp256r1/secp384r1) nor EdDSA (Ed25519/Ed448) is quantum-safe. However, they differ against classical adversaries:
 
 * ECDSA is not SUF-CMA, even classically and even with deterministic nonces {{RFC6979}}: given a valid signature `(r, s)`, anyone can compute `(r, n - s)`, and this is also a valid signature on the same message.
 
@@ -303,15 +303,15 @@ This has the following consequences for hybrid constructions:
 
 Both constructions are EUF-CMA as long as at least one component is EUF-CMA secure (for the non-black-box construction, under the additional requirements of {{nbb-security}}). This document additionally targets SUF-CMA, which constructions such as {{-LAMPS-COMPOSITE}} do not guarantee in general.
 
-The black-box construction ({{black-box}}) aims to guarantee strong unforgeability of the hybrid signature whenever the second component is SUF-CMA secure. This is in contrast to {{-LAMPS-COMPOSITE}}, where SUF-CMA of the composite generally requires both components to be SUF-CMA. The non-black-box construction ({{non-black-box}}) strengthens this further: because the Fiat-Shamir response is bound to the second signature with `chl = PH(2 || s2)`, SUF-CMA of the overall construction holds if either component is SUF-CMA secure, provided that the ID scheme has unique responses (enforced by verification) and ths second signature scheme is MBS and RMV.
+The black-box construction ({{black-box}}) aims to guarantee strong unforgeability of the hybrid signature whenever the second component is SUF-CMA secure. This is in contrast to {{-LAMPS-COMPOSITE}}, where SUF-CMA of the composite generally requires both components to be SUF-CMA. The non-black-box construction ({{non-black-box}}) strengthens this further: because the Fiat-Shamir response is bound to the second signature with `chl = PH(2 || s2)`, SUF-CMA of the overall construction holds if either component is SUF-CMA secure, provided that the ID scheme has unique responses (enforced by verification) and the second signature scheme is MBS and RMV.
 
 ## SUF-CMA Security
 
 ### Why SUF-CMA matters
 
-While EUF-CMA security could be sufficient in several use cases, weaknesses in EUF-only schemes allow signature malleability (producing a new valid signature on an already-signed message without the private key), enabling real-world exploits such as replay of messages, double receipts, and log poisoning. Moreover, many current deployed systems implicitly assume that all digital signatures are SUF-secure, and that a single unique signature exists per message.
+While EUF-CMA security could be sufficient in several use cases, weaknesses in EUF-only schemes allow signature malleability (producing a new valid signature on an already-signed message without the private key), enabling real-world exploits such as replay of messages, double receipts, and log poisoning. Moreover, many current deployed systems implicitly assume that all digital signatures are SUF-secure.
 
-For this reason, the construction ensures that if the second component is SUF-CMA, the hybrid resists such attacks, like recent standardized signature schemes (EdDSA, ML-DSA, SLH-DSA, etc.).
+For this reason, the construction ensures that if the second component is SUF-CMA, the hybrid resists such attacks, like recent standardized signature schemes (EdDSA, ML-DSA, etc.).
 
 ### Security Rationale
 
@@ -381,7 +381,7 @@ Each construction is EUF-CMA as long as at least one component is EUF-CMA.
 
 If the PQ component is EUF-CMA, in all three constructions, the PQ signature of a forgery on a new message is computed over an input that depends on this message (`m' || s1` for the black-box construction, `m''` for the non-black-box construction, and the message itself for Silithium). This input was never signed, so the PQ signature is a forgery against the PQ component.
 
-If the traditional component is EUF-CMA: in the black-box construction, `s1` is a traditional signature on `m'`, which was never signed, so `s1` is a forgery against the traditional component. In the non-black-box construction and Silithium, the traditional component is a response to a challenge derived from the PQ signature, which is bound to the message and the commitment. This challenge plays the same role as in a regular Fiat-Shamir signature, so the traditional part is a forgery against the traditional component.
+If the traditional component is EUF-CMA, in the black-box construction, `s1` is a traditional signature on `m'`, which was never signed, so `s1` is a forgery against the traditional component. In the non-black-box construction and Silithium, the traditional component is a response to a challenge derived from the PQ signature, which is bound to the message and the commitment. This challenge plays the same role as in a regular Fiat-Shamir signature, so the traditional part is a forgery against the traditional component.
 
 ## Strong Unforgeability (SUF-CMA)
 
