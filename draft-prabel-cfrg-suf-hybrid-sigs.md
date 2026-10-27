@@ -250,7 +250,7 @@ Verify hybrid signature
 
 - Compute m' = Prefix || Label || len(ctx) || ctx || pk's || PH(m)
 - Parse s as (rsp || s2)
-- Check that rsp is within bounds (for EdDSA: 0 <= S < L); otherwise, reject
+- Reject if rsp is out of bounds (for EdDSA: S >= L)
 - Compute chl = PH(2 || s2)
 - Compute com = ID.ExtCom(pk1, chl, rsp)
 - Compute m'' = PH(1 || m' || com)
